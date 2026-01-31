@@ -30,10 +30,11 @@ class Process:
         self.image = None;
         
     def read(self):
-        image_file = File()
-        image_file.findFile()
-        image_file.getPath()
-        self.image = cv2.imread(image_file)
+        file_obj = File()
+        path = file_obj.getPath()
+        if path and os.path.exists(path):
+            return cv2.imread(path)
+        return None
 
     def display(self,label,image,resize=False):
 
@@ -52,8 +53,8 @@ class Process:
         gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY);
         return gray;
 
-    def thresholdBinary(self,image,low=0,high=255):
-        thresh,bw = cv2.threshold(image,low,high,cv2.THRESH_BINARY);
+    def thresholdBinary(self,image,maxt=255,block=11,C=2):
+        bw = cv2.adaptiveThreshold(image,maxt,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,block,C);
         return bw;
 
     def thicker(self,image,iteration=1,kx=1,ky=1):
@@ -92,7 +93,7 @@ class Process:
 
         gray = self.grayScale(copy);
         gaussian = self.gaussianBlur(gray,7,0);
-        threshold = cv2.threshold(gaussian,0,255,cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+        x,threshold = cv2.threshold(gaussian,0,255,cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
         kernal = cv2.getStructuringElement(cv2.MORPH_RECT,(30,5));
         dilate = cv2.dilate(threshold,kernal,iterations=2);
@@ -138,3 +139,5 @@ class Process:
         x, y, w, h = cv2.boundingRect(cnt)
         crop = image[y:y+h, x:x+w]
         return (crop)
+    
+

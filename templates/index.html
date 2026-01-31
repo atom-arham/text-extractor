@@ -9,26 +9,28 @@
     <h1>Upload Files</h1>
     <form action="/" method="post" enctype="multipart/form-data">
         <input type="file" name="file" id="file">
-        <button type="submit">Upload</button>
-    </form>
-
-    <img height="400">
-    <br>
-
-    <form action="/start" method="post">
-        <button type="submit">Start</button>
+        <button type="submit" name="action" value="upload">Upload</button>
     </form>
     
+    <br>
+    <br>
+    {% if filename %}
+        <img src="{{ url_for('static', filename=filename) }}" height="200">
+    {% endif %}
+    <br>
+    <br>
 
-    <form>
-        <p></p>
-        <output>fwadfadawd</output>
+    <form action="/start" method="POST">
+        <button type="submit">Start OCR</button>
     </form>
 
-    <script>
-        function start(){
-            console.log("started");
-        }
-    </script>
+    <br>
+    <br>
+
+    <label for="output-box">Output results:</label><br>
+        <textarea id="output-box" rows="10" cols="80">
+            {{ status_message if status_message else 'No data yet...' }}
+        </textarea>
+
 </body>
 </html>
