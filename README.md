@@ -1,7 +1,7 @@
 # text-extractor
 
 ### User Interface (GUI)
-<p align="center">
+<p align="left">
   <img src="https://github.com/user-attachments/assets/211f1d38-0762-4bd7-9a2d-0743a9629a6b" width="800" alt="Text Extractor GUI" />
 </p>
 
