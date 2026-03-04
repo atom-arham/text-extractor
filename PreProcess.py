@@ -54,7 +54,7 @@ class Process:
         return gray;
 
     def thresholdBinary(self,image,maxt=255,block=11,C=2):
-        bw = cv2.adaptiveThreshold(image,maxt,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,block,C);
+        xx ,bw = cv2.threshold(image,0, maxt,cv2.THRESH_BINARY + cv2.THRESH_OTSU);
         return bw;
 
     def thicker(self,image,iteration=1,kx=1,ky=1):
