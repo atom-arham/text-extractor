@@ -43,16 +43,18 @@ def start():
 def process():
     process = Process()
     image = process.read()
+    
     image = process.deskew(image)
     image = process.grayScale(image)
     #image = process.invert(image)
     image = process.thresholdBinary(image,maxt=255,block=11)
 
-    raw = pytesseract.image_to_string(image)
+    raw = pytesseract.image_to_string(image, config='--psm 3')
 
     text = raw.split("\n")
     string = " ".join(text)
     para = "\n".join(text)
+    print(para)
     return para
 
 if __name__ == '__main__':
